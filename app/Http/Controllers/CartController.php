@@ -23,29 +23,43 @@ class CartController extends Controller
             12 => ['id' => 12,'name' => 'Tsubokiri matcha', 'price' => 39, 'image' => 'IMG_3023.jpg', 'description' => 'High-quality white matcha tea.'],
 
         ];
-
-        // Check if product exists
-        if (!isset($products[$id])) {
-            abort(404, 'Product not found');
-        }
-
-        $product = $products[$id];
-
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$product['id']])) {
-            $cart[$product['id']]['quantity']++;
-        } else {
-            $cart[$product['id']] = [
-                "name" => $product['name'],
-                "price" => $product['price'],
-                "quantity" => 1,
-                "image" => $product['image']
-            ];
-        }
-        session()->put('cart', $cart);
+        if (isset($products[$id])) {
+            if (isset($cart[$id])) {
+                $cart[$id]['quantity']++;
+            } else {
+                $cart[$id] = [
+                    'name' => $products[$id]['name'],
+                    'price' => $products[$id]['price'],
+                    'quantity' => 1,
+                ];
+            }
 
-        return back()->with('success', $product['name'] . ' added to cart!');
+            session()->put('cart', $cart);
+            return redirect()->back()->with('success', 'Product added to cart.');
+        }
+        else{
+
+        return redirect()->back()->with('error', 'Product not found.');
     }
+    }
+
+    public function index()
+    {
+        $cart = session()->get('cart', []);
+        return view('cart.index', compact('cart'));
+    }
+
+    public function remove($id)
+    {
+        $cart = session()->get('cart', []);
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+        }
+        return redirect()->back()->with('success', 'Item removed from cart.');
+    }
+
 
 }

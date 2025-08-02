@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-@section('content')
     <!-- Hero -->
     <section class="hero">
         <h1 class="fw-bold text-success">Catalog</h1>
@@ -33,6 +32,14 @@
 
 <section class="products">
     <div class="container">
+        {{-- Alert Messages --}}
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
         {{-- <h1 class = "catalog-title">Catalog</h1> --}}
         <div class="product-grid">
             @foreach ($products as $index => $product)
@@ -40,15 +47,31 @@
                     <img class="imagesize" src="{{ asset('images/product/' . $product['image']) }}" alt="{{ $product['name'] }}">
                     <h6 class="product-title"> {{ $product['name'] }}</h6>   
                     <p>$ {{ $product['price'] }}</p>
-                    <form action="{{ route('cart.add', ['id' => $product['id']]) }}" method="POST">
+                    <form action="{{ route('cart.add', $product['id']) }}" method="POST">
                         @csrf
-                        <input type="hidden" name="product_id" value="{{ $index }}">
                         <button type="submit" class="btn btn-success">Add</button>
+                        {{-- View Button --}}
+                        <button type="button" class="btn-view" onclick="openModal({{ $product['id'] }})">View</button>
                     </form>
                 </div>
             @endforeach
         </div>
     </div>
+        {{-- Modal --}}
+<div id="productModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" class="modal-img" src="" alt="">
+        <h2 id="modalName"></h2>
+        <p id="modalPrice"></p>
+        <p id="modalDescription"></p>
+        <form action="{{ route('cart.add', $product['id']) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn-view-add">Add</button>
+                    </form>
+    </div>
+</div>
+    
 </section>
 <script>
   const searchInput = document.getElementById("searchInput");
@@ -62,6 +85,25 @@
       card.style.display = title.includes(searchValue) ? "block" : "none";
     });
   });
+</script>
+<script>
+    const products = @json($products);
+
+    function openModal(id) {
+        const product = products[id];
+        if (!product) return;
+
+        document.getElementById('modalImage').src = `/images/product/${product.image}`;
+        document.getElementById('modalName').textContent = product.name;
+        document.getElementById('modalPrice').textContent = `$ ${product.price}`;
+        document.getElementById('modalDescription').textContent = product.description;
+
+        document.getElementById('productModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('productModal').style.display = 'none';
+    }
 </script>
 
 @endsection

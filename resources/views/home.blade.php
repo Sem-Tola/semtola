@@ -17,18 +17,18 @@
     
 
     $products = [
-        ['name' => 'Matcha Teen (White)', 'price' => 14.8, 'image' => 'IMG_2991.PNG'],
-        ['name' => 'Matcha Teen (Green)', 'price' => 14.8, 'image' => 'IMG_3000.jpg'],
-        ['name' => 'UMI', 'price' => 38, 'image' => 'IMG_3007.PNG'],
-        ['name' => 'Sadō', 'price' => 27, 'image' => 'IMG_3012.PNG'],
-        ['name' => 'Ummon', 'price' => 43, 'image' => 'IMG_3014.jpg'],
-        ['name' => 'Mellow', 'price' => 29, 'image' => 'IMG_3017.jpg'],
-        ['name' => 'Uji', 'price' => 38, 'image' => 'IMG_3016.jpg'],
-        ['name' => 'Chymey', 'price' => 32, 'image' => 'IMG_3018.jpg'],
-        ['name' => 'Marukyu koyamaen ISUZU matcha', 'price' => 41, 'image' => 'IMG_3019.jpg'],
-        ['name' => 'Yugen (Marukyu Koyamaen)', 'price' => 37, 'image' => 'IMG_3020.jpg'],
-        ['name' => 'Kanbayashi Shunsho', 'price' => 45.36, 'image' => 'IMG_3021.jpg'],
-        ['name' => 'Tsubokiri matcha', 'price' => 39, 'image' => 'IMG_3023.jpg'],
+        ['id' => 1,'name' => 'Matcha Teen (White)', 'price' => 14.8, 'image' => 'IMG_2991.PNG'],
+        ['id' => 2,'name' => 'Matcha Teen (Green)', 'price' => 14.8, 'image' => 'IMG_3000.jpg'],
+        ['id' => 3,'name' => 'UMI', 'price' => 38, 'image' => 'IMG_3007.PNG'],
+        ['id' => 4,'name' => 'Sadō', 'price' => 27, 'image' => 'IMG_3012.PNG'],
+        ['id' => 5,'name' => 'Ummon', 'price' => 43, 'image' => 'IMG_3014.jpg'],
+        ['id' => 6,'name' => 'Mellow', 'price' => 29, 'image' => 'IMG_3017.jpg'],
+        ['id' => 7,'name' => 'Uji', 'price' => 38, 'image' => 'IMG_3016.jpg'],
+        ['id' => 8,'name' => 'Chymey', 'price' => 32, 'image' => 'IMG_3018.jpg'],
+        ['id' => 9,'name' => 'Marukyu koyamaen ISUZU matcha', 'price' => 41, 'image' => 'IMG_3019.jpg'],
+        ['id' => 10,'name' => 'Yugen (Marukyu Koyamaen)', 'price' => 37, 'image' => 'IMG_3020.jpg'],
+        ['id' => 11,'name' => 'Kanbayashi Shunsho', 'price' => 45.36, 'image' => 'IMG_3021.jpg'],
+        ['id' => 12,'name' => 'Tsubokiri matcha', 'price' => 39, 'image' => 'IMG_3023.jpg'],
     ];
 @endphp
 <div class="product-search">
@@ -37,19 +37,46 @@
 
 <section class="products">
     <div class="container">
-        <h3>🔥 Featured Products</h3>
+        {{-- Alert Messages --}}
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+        {{-- <h1 class = "catalog-title">Catalog</h1> --}}
         <div class="product-grid">
             @foreach ($products as $index => $product)
                 <div class="product-card">
                     <img class="imagesize" src="{{ asset('images/product/' . $product['image']) }}" alt="{{ $product['name'] }}">
                     <h6 class="product-title"> {{ $product['name'] }}</h6>   
                     <p>$ {{ $product['price'] }}</p>
-                    <a href="/product/{{ $index + 1 }}" class="btn-view">View</a>
-                    <a href="/product/{{ $index + 1 }}" class="btn-add">Add</a>
+                    <form action="{{ route('cart.add', $product['id']) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn-add">Add</button>
+                        {{-- View Button --}}
+                        <button type="button" class="btn-view" onclick="openModal({{ $product['id'] }})">View</button>
+                    </form>
                 </div>
             @endforeach
         </div>
     </div>
+    {{-- Modal --}}
+<div id="productModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" class="modal-img" src="" alt="">
+        <h2 id="modalName"></h2>
+        <p id="modalPrice"></p>
+        <p id="modalDescription"></p>
+        <form action="{{ route('cart.add', $product['id']) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn-view-add">Add</button>
+                    </form>
+    </div>
+</div>
+    
 </section>
 <script>
   const searchInput = document.getElementById("searchInput");
@@ -64,6 +91,26 @@
     });
   });
 </script>
+<script>
+    const products = @json($products);
+
+    function openModal(id) {
+        const product = products[id];
+        if (!product) return;
+
+        document.getElementById('modalImage').src = `/images/product/${product.image}`;
+        document.getElementById('modalName').textContent = product.name;
+        document.getElementById('modalPrice').textContent = `$ ${product.price}`;
+        document.getElementById('modalDescription').textContent = product.description;
+
+        document.getElementById('productModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('productModal').style.display = 'none';
+    }
+</script>
+
 
 
 @endsection
