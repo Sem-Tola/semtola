@@ -1,0 +1,16 @@
+.about-us {
+    padding: 2rem 0;
+    line-height: 1.7;
+}
+
+.about-us h1, .about-us h2 {
+    color: #003366;
+}
+
+.about-us ul {
+    padding-left: 1.5rem;
+}
+
+.about-us li {
+    margin-bottom: 0.5rem;
+}

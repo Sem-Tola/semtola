@@ -1,22 +1,24 @@
-<header class="header">
-    <header class="main-header">
-    <div class="header-container">
-        <a href="/" class="logo">
-            <img src="/images/logo.png" alt=" Logo">
-        </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TEEN. Navigation</title>
+  </head>
+<body>
 
-        <nav class="nav-links">
-            <a href="/">Home</a>
-            <a href="/catalog">Catalog</a>
-            <a href="/cart">Cart</a>
-            <a href="/about">About</a>
-        </nav>
-
-        <div class="header-actions">
-            <input type="text" class="search-box" placeholder="Search...">
-            <a href="#" class="btn-post">+ Post Ad</a>
-        </div>
+  <nav  class="navbar">
+    <div class="logo">
+        <a href="/" style="font-size: 0.7cm">TEEN</a>
     </div>
-</header>
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/catalog">Catalog</a></li>
+        <li><a href="/cart">Cart</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </div>
+  </nav>
 
-</header>
+</body>
+</html>
