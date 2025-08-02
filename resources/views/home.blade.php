@@ -31,9 +31,9 @@
         ['id' => 12,'name' => 'Tsubokiri matcha', 'price' => 39, 'image' => 'IMG_3023.jpg'],
     ];
 @endphp
-<div class="product-search">
+{{-- <div class="product-search">
   <input type="text" id="searchInput" placeholder="Search products..." />
-</div>
+</div> --}}
 
 <section class="products">
     <div class="container">
@@ -79,7 +79,7 @@
     </div>
     
 </section>
-<script>
+{{-- <script>
   const searchInput = document.getElementById("searchInput");
 
   searchInput.addEventListener("input", function () {
@@ -91,7 +91,7 @@
       card.style.display = title.includes(searchValue) ? "block" : "none";
     });
   });
-</script>
+</script> --}}
 <script>
     function openModal(id) {
         fetch(`/product/${id}`)

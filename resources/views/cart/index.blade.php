@@ -7,24 +7,21 @@
     <h1 class="mb-4">🛒 Your Cart</h1>
 
         {{-- Alert Messages --}}
-    @if (session('success'))
+        @if (session('error'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
+            {{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
+        @if (session('success'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
 
     @if(count($cart) > 0)
-    {{-- @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif --}}
         <div class="card shadow-sm border-0">
             <div class="card-body p-4">
                 <div class="table-responsive">
