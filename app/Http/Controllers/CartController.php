@@ -44,6 +44,14 @@ class CartController extends Controller
         return redirect()->back()->with('error', 'Product not found.');
     }
     }
+    public function processCheckout(Request $request)
+    {
+        // Validate and process payment...
+
+        session()->forget('cart'); // ✅ Clear the cart after checkout
+
+        return redirect()->route('cart.index')->with('success', 'Checkout complete! Thank you.');
+    }
 
     public function index()
     {
@@ -58,8 +66,7 @@ class CartController extends Controller
             unset($cart[$id]);
             session()->put('cart', $cart);
         }
-        return redirect()->back()->with('success', 'Item removed from cart.');
+        return redirect()->route('cart.index')->with('success', 'Item removed from cart.');
     }
-
 
 }

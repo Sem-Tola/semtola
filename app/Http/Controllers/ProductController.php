@@ -24,13 +24,19 @@ class ProductController extends Controller
             12 => ['id' => 12,'name' => 'Tsubokiri matcha', 'price' => 39, 'image' => 'IMG_3023.jpg', 'description' => 'High-quality white matcha tea.'],
 
         ];
+        if (!isset($products[$id])) {
+            return response()->json(['error' => 'Product not found.']);
+        }
+
+        return response()->json($products[$id]);
 
         if (!isset($products[$id])) {
             abort(404);
         }
+        $product = Product::find($id);
 
-        $product = $products[$id];
-        return view('product.show', compact('product'));
+        // $product = $products[$id];
+        // return view('product.show', compact('product'));
 
         // 🛒 Add product to session cart
         $cart = session()->get('cart', []);
@@ -46,5 +52,6 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success', 'Item added to cart!');
     }
+    
     
 }

@@ -10,10 +10,12 @@ Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('car
 
 
 Route::post('/checkout', function () {
-    // For now just redirect back with a fake success message
-    return redirect()->route('cart')->with('success', 'Your payment is being processed!');
-})->name('checkout.process');
+    // Clear the cart
+    Session::forget('cart');
 
+    // Redirect back with success message
+    return redirect()->route('cart.index')->with('success', '✅ Payment successful! Your cart is now empty.');
+})->name('checkout.process');
 // web.php
 
 // Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');

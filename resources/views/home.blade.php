@@ -63,19 +63,20 @@
         </div>
     </div>
     {{-- Modal --}}
-<div id="productModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <img id="modalImage" class="modal-img" src="" alt="">
-        <h2 id="modalName"></h2>
-        <p id="modalPrice"></p>
-        <p id="modalDescription"></p>
-        <form action="{{ route('cart.add', $product['id']) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn-view-add">Add</button>
-                    </form>
+    <div id="productModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" class="modal-img" src="" alt="">
+            <h2 id="modalName"></h2>
+            <p id="modalPrice"></p>
+            <p id="modalDescription"></p>
+
+            <form id="modalAddForm" method="POST">
+                @csrf
+                <button type="submit" class="btn-view-add">Add</button>
+            </form>
+        </div>
     </div>
-</div>
     
 </section>
 <script>
@@ -92,24 +93,46 @@
   });
 </script>
 <script>
-    const products = @json($products);
-
     function openModal(id) {
-        const product = products[id];
-        if (!product) return;
+        fetch(`/product/${id}`)
+            .then(response => response.json())
+            .then(product => {
+                if (product.error) {
+                    alert(product.error);
+                    return;
+                }
 
-        document.getElementById('modalImage').src = `/images/product/${product.image}`;
-        document.getElementById('modalName').textContent = product.name;
-        document.getElementById('modalPrice').textContent = `$ ${product.price}`;
-        document.getElementById('modalDescription').textContent = product.description;
+                // Fill modal content
+                document.getElementById('modalImage').src = `/images/product/${product.image}`;
+                document.getElementById('modalName').textContent = product.name;
+                document.getElementById('modalPrice').textContent = `$ ${product.price}`;
+                document.getElementById('modalDescription').textContent = product.description || '';
 
-        document.getElementById('productModal').style.display = 'block';
+                // Set correct form action
+                document.getElementById('modalAddForm').action = `/cart/add/${product.id}`;
+
+                document.getElementById('productModal').style.display = 'block';
+            })
+            .catch(error => {
+                console.error("Error fetching product:", error);
+                alert("Failed to load product details.");
+            });
     }
 
     function closeModal() {
         document.getElementById('productModal').style.display = 'none';
     }
+
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        const modal = document.getElementById('productModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
 </script>
+
 
 
 

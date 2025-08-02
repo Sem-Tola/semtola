@@ -22,7 +22,7 @@ class CatalogController extends Controller
     public function index()
     {
     $products = [
-            1 => ['id' => 1,'name' => 'Matcha Teen (White)', 'price' => 14.8, 'image' => 'IMG_2991.PNG', 'description' => 'High-quality white matcha tea.'],
+            1 => ['id' => 0,'name' => 'Matcha Teen (White)', 'price' => 14.8, 'image' => 'IMG_2991.PNG', 'description' => 'High-quality white matcha tea.'],
             2 => ['id' => 2,'name' => 'Matcha Teen (Green)', 'price' => 14.8, 'image' => 'IMG_3000.jpg', 'description' => 'High-quality white matcha tea.'],
             3 => ['id' => 3,'name' => 'UMI', 'price' => 38, 'image' => 'IMG_3007.PNG', 'description' => 'High-quality white matcha tea.'],
             4 => ['id' => 4,'name' => 'Sadō', 'price' => 27, 'image' => 'IMG_3012.PNG', 'description' => 'High-quality white matcha tea.'],

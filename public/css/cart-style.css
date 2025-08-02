@@ -131,3 +131,27 @@
     margin-bottom: 15px;
     font-size: 1.2rem;
 }
+
+
+.invoice {
+    margin-bottom: 20px;
+}
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.invoice-table th,
+.invoice-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+.invoice-table .right {
+    text-align: right;
+}
+    .invoice-table th, .invoice-table td {
+        padding: 6px;
+    }
+    .invoice-table td.text-end {
+        text-align: right;
+    }
+
