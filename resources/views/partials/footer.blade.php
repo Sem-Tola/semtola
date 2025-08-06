@@ -1,5 +1,4 @@
-<footer class="footer">
-    <footer class="main-footer">
+<footer class="main-footer">
     <div class="footer-container">
         <div class="footer-section">
             <h4>About</h4>
@@ -41,6 +40,4 @@
     <div class="footer-bottom">
         <p>&copy; {{ date('Y') }} ST5 Marketplace. All rights reserved.</p>
     </div>
-</footer>
-
 </footer>

@@ -17,11 +17,13 @@
 
 </head>
 <body>
+    <div class="page-wrapper">
     @include('partials.header')
 
     <main>
         @yield('content')
     </main>
+    </div>
 
     @include('partials.footer')
 </body>

@@ -34,7 +34,8 @@
 {{-- <div class="product-search">
   <input type="text" id="searchInput" placeholder="Search products..." />
 </div> --}}
-
+<div class="desktop-wrapper">
+    <!-- All your content here (hero, products, etc.) -->
 <section class="products">
     <div class="container">
         {{-- Alert Messages --}}
@@ -79,6 +80,8 @@
     </div>
     
 </section>
+</div>
+
 {{-- <script>
   const searchInput = document.getElementById("searchInput");
 
